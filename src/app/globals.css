@@ -1,26 +1,97 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dragon Julz Art Theme Colors */
+  --clr-primary: #1e6fe3; /* Electric-azure */
+  --clr-secondary: #0d4f66; /* Deep teal */
+  --clr-accent: #c89b3c; /* Weathered-gold */
+  --clr-surface: #1b1b1b; /* Charcoal */
+  --clr-bg: #0f0f0f; /* Near-black */
+  --clr-text: #f5f7fa; /* Off-white */
+  --clr-text-muted: #9ba4b1; /* Secondary text */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-primary: var(--clr-primary);
+  --color-secondary: var(--clr-secondary);
+  --color-accent: var(--clr-accent);
+  --color-surface: var(--clr-surface);
+  --color-bg: var(--clr-bg);
+  --color-text: var(--clr-text);
+  --color-text-muted: var(--clr-text-muted);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Typography */
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--clr-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--clr-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Drop cap for About section */
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0.1em 0.1em 0 0;
+  color: var(--clr-accent);
+}
+
+/* Hero Animations */
+@keyframes zoom-in {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in-delayed {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-zoom-in {
+  animation: zoom-in 1.5s ease-out forwards;
+}
+
+.animate-fade-in-delayed {
+  animation: fade-in-delayed 1s ease-out 0.8s forwards;
 }
