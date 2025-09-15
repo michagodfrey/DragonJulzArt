@@ -5,6 +5,7 @@ import { GET_GALLERY_ITEMS } from "../graphql/queries";
 import Image from "next/image";
 import { useState } from "react";
 import GalleryCarousel from "./GalleryCarousel";
+import { useCart } from "../context/CartContext";
 
 interface GalleryItem {
   id: string;
@@ -24,6 +25,7 @@ export default function GalleryGrid() {
 
   const [carouselOpen, setCarouselOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { addItem } = useCart();
 
   const { loading, error, data } = useQuery(GET_GALLERY_ITEMS);
 
@@ -176,7 +178,15 @@ export default function GalleryGrid() {
                   className="w-full mt-4 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider"
                   onClick={(e) => {
                     e.stopPropagation();
-                    // Handle add to cart logic here
+                    addItem(
+                      {
+                        id: item.id,
+                        title: item.title,
+                        price: item.price,
+                        imageUrl: item.image?.url,
+                      },
+                      1
+                    );
                   }}
                 >
                   Add to Cart

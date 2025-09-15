@@ -14,9 +14,11 @@ import {
 } from "lucide-react";
 import GalleryWrapper from "./components/GalleryWrapper";
 import { useState } from "react";
+import { useCart } from "./context/CartContext";
 
 export default function Home() {
   const [showFullBio, setShowFullBio] = useState(false);
+  const { openCart, count } = useCart();
 
   return (
     <div className="min-h-screen bg-[var(--clr-bg)] text-[var(--clr-text)]">
@@ -67,6 +69,13 @@ export default function Home() {
                 Contact
               </a>
             </nav>
+            <button
+              onClick={openCart}
+              className="ml-4 bg-[var(--clr-accent)] text-[var(--clr-surface)] px-4 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium inline-flex items-center uppercase tracking-wider"
+            >
+              <ShoppingBag className="w-4 h-4 mr-2" />
+              Cart{count > 0 ? ` (${count})` : ""}
+            </button>
           </div>
         </div>
       </header>
@@ -424,7 +433,7 @@ export default function Home() {
             </div>
 
             {/* Contact */}
-            <div>
+            <div id="contact">
               <h4 className="font-display font-semibold mb-4">Contact</h4>
               <ul className="space-y-2">
                 <li className="text-[var(--clr-text-muted)]">
