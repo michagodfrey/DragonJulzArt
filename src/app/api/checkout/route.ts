@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
-import { Client, Environment } from "square";
+import { Client, Environment, type Money } from "square";
 
 type CartItem = {
   id: string;
@@ -17,10 +17,16 @@ function assertEnv(name: string): string {
   return value;
 }
 
-function toMoney(amountMajorUnits: number) {
+function toMoney(amountMajorUnits: number): Money {
+  const upper = (process.env.SQUARE_CURRENCY || "AUD").toUpperCase();
+  const currency = (
+    /^[A-Z]{3}$/.test(upper)
+      ? (upper as Money["currency"])
+      : ("AUD" as Money["currency"])
+  ) as Money["currency"];
   return {
     amount: BigInt(Math.round(amountMajorUnits * 100)),
-    currency: (process.env.SQUARE_CURRENCY || "AUD") as any,
+    currency,
   };
 }
 
@@ -76,11 +82,10 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ url });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Square checkout error", err);
-    return NextResponse.json(
-      { error: err?.message || "Internal Server Error" },
-      { status: 500 }
-    );
+    const message =
+      err instanceof Error ? err.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
