@@ -175,7 +175,7 @@ export default function GalleryGrid() {
 
               {item.available && (
                 <button
-                  className="w-full mt-4 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider"
+                  className="w-full mt-4 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     addItem(

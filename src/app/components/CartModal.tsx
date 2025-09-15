@@ -1,35 +1,18 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
 
 export default function CartModal() {
-  const { isOpen, closeCart, items, updateQuantity, removeItem, total } =
-    useCart();
+  const { isOpen, closeCart, items, removeItem, total } = useCart();
+  const [comingSoon, setComingSoon] = useState(false);
 
   if (!isOpen) return null;
 
   const checkout = async () => {
-    if (items.length === 0) return;
-    const payload = {
-      items: items.map((i) => ({
-        id: i.id,
-        title: i.title,
-        price: i.price,
-        quantity: i.quantity,
-      })),
-    };
-    const resp = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (!resp.ok) {
-      alert("Checkout failed. Please try again.");
-      return;
-    }
-    const data = await resp.json();
-    if (data?.url) window.location.href = data.url;
+    // Temporarily disable checkout and show coming soon message
+    setComingSoon(true);
   };
 
   return (
@@ -40,7 +23,7 @@ export default function CartModal() {
           <h2 className="text-xl font-display font-semibold">Your Cart</h2>
           <button
             onClick={closeCart}
-            className="text-[var(--clr-text-muted)] hover:text-[var(--clr-text)]"
+            className="text-[var(--clr-text-muted)] hover:text-[var(--clr-text)] cursor-pointer"
           >
             Close
           </button>
@@ -72,24 +55,12 @@ export default function CartModal() {
                   <div className="text-[var(--clr-text-muted)]">
                     ${item.price.toLocaleString()}
                   </div>
-                  <div className="mt-2 flex items-center gap-2">
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-sm text-[var(--clr-text-muted)]">
+                      Qty 1 (unique artwork)
+                    </span>
                     <button
-                      className="px-2 py-1 border rounded"
-                      onClick={() =>
-                        updateQuantity(item.id, Math.max(1, item.quantity - 1))
-                      }
-                    >
-                      -
-                    </button>
-                    <span className="min-w-6 text-center">{item.quantity}</span>
-                    <button
-                      className="px-2 py-1 border rounded"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    >
-                      +
-                    </button>
-                    <button
-                      className="ml-4 text-red-500 hover:underline"
+                      className="text-red-500 hover:underline cursor-pointer"
                       onClick={() => removeItem(item.id)}
                     >
                       Remove
@@ -108,13 +79,49 @@ export default function CartModal() {
 
             <button
               onClick={checkout}
-              className="w-full bg-[var(--clr-accent)] text-[var(--clr-surface)] py-3 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider"
+              className="cursor-pointer w-full bg-[var(--clr-accent)] text-[var(--clr-surface)] py-3 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider"
             >
               Checkout
             </button>
           </div>
         )}
       </div>
+      {comingSoon && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setComingSoon(false)}
+          />
+          <div className="relative z-10 bg-[var(--clr-surface)] text-[var(--clr-text)] p-6 rounded-xl border border-[var(--clr-primary)]/20 max-w-sm w-full mx-4 text-center">
+            <h3 className="text-xl font-display font-semibold mb-2">
+              Shop coming soon
+            </h3>
+            <p className="text-[var(--clr-text-muted)] mb-4">
+              To purchase, please email{" "}
+              <a
+                href="mailto:dragonjulzart@gmail.com"
+                className="text-[var(--clr-primary)] underline"
+              >
+                dragonjulzart@gmail.com
+              </a>
+            </p>
+            <div className="flex gap-3 justify-center">
+              <a
+                href="mailto:dragonjulzart@gmail.com"
+                className="bg-[var(--clr-accent)] text-[var(--clr-surface)] px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors"
+              >
+                Contact
+              </a>
+              <button
+                onClick={() => setComingSoon(false)}
+                className="px-4 py-2 border rounded-md"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

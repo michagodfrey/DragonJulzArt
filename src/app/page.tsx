@@ -467,7 +467,7 @@ export default function Home() {
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="mailto:juliet@dragonjulzart.com"
+                  href="mailto:dragonjulzart@gmail.com"
                   className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
                 >
                   <Mail className="w-5 h-5" />

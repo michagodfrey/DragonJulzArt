@@ -158,7 +158,7 @@ export default function GalleryCarousel({
             </div>
 
             {currentItem.available && (
-              <button className="ml-6 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-6 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider">
+              <button className="ml-6 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-6 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider cursor-pointer">
                 Add to Cart
               </button>
             )}

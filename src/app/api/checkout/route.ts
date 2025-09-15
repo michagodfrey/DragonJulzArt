@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
-import { Client, Environment } from "@square/square";
+import { Client, Environment } from "square";
 
 type CartItem = {
   id: string;
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       note: item.id,
     }));
 
-    const { result } = await client.checkout.createPaymentLink({
+    const { result } = await client.checkoutApi.createPaymentLink({
       idempotencyKey: randomUUID(),
       quickPay: undefined,
       order: {

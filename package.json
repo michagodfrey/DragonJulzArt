@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
-    "@square/square": "^38.1.0",
+    "square": "^38.1.0",
     "graphql": "^16.11.0",
     "lucide-react": "^0.524.0",
     "next": "15.3.4",
