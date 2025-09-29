@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { randomUUID } from "crypto";
-import { Client, Environment, type Money } from "square";
+import Stripe from "stripe";
 
 type CartItem = {
   id: string;
@@ -17,17 +16,8 @@ function assertEnv(name: string): string {
   return value;
 }
 
-function toMoney(amountMajorUnits: number): Money {
-  const upper = (process.env.SQUARE_CURRENCY || "AUD").toUpperCase();
-  const currency = (
-    /^[A-Z]{3}$/.test(upper)
-      ? (upper as Money["currency"])
-      : ("AUD" as Money["currency"])
-  ) as Money["currency"];
-  return {
-    amount: BigInt(Math.round(amountMajorUnits * 100)),
-    currency,
-  };
+function toAmountMinorUnits(amountMajorUnits: number): number {
+  return Math.round(amountMajorUnits * 100);
 }
 
 export async function POST(req: NextRequest) {
@@ -38,52 +28,57 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No items provided" }, { status: 400 });
     }
 
-    const accessToken = assertEnv("SQUARE_ACCESS_TOKEN");
-    const locationId = assertEnv("SQUARE_LOCATION_ID");
+    const stripeSecretKey = assertEnv("STRIPE_SECRET_KEY");
     const siteUrl =
       process.env.NEXT_PUBLIC_SITE_URL ||
       `${req.nextUrl.protocol}//${req.nextUrl.host}`;
 
-    const client = new Client({
-      accessToken,
-      environment:
-        (process.env.SQUARE_ENVIRONMENT || "production").toLowerCase() ===
-        "sandbox"
-          ? Environment.Sandbox
-          : Environment.Production,
+    const currency = (process.env.STRIPE_CURRENCY || "AUD").toLowerCase();
+
+    const stripe = new Stripe(stripeSecretKey, {
+      apiVersion: "2025-08-27.basil",
     });
 
-    const lineItems = body.items.map((item) => ({
-      name: item.title,
-      quantity: String(item.quantity || 1),
-      basePriceMoney: toMoney(item.price),
-      note: item.id,
+    const line_items = body.items.map((item) => ({
+      quantity: item.quantity || 1,
+      price_data: {
+        currency,
+        product_data: {
+          name: item.title,
+          metadata: {
+            item_id: item.id,
+          },
+        },
+        unit_amount: toAmountMinorUnits(item.price),
+      },
+      // For unique artwork, prevent quantity changes on the hosted page
+      adjustable_quantity: { enabled: false },
     }));
 
-    const { result } = await client.checkoutApi.createPaymentLink({
-      idempotencyKey: randomUUID(),
-      quickPay: undefined,
-      order: {
-        locationId,
-        lineItems,
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items,
+      success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: siteUrl,
+      billing_address_collection: "auto",
+      shipping_address_collection: undefined,
+      // Optional: send some metadata for reconciliation
+      metadata: {
+        source: "gallery",
       },
-      checkoutOptions: {
-        redirectUrl: `${siteUrl}/success`,
-        askForShippingAddress: false,
-      },
+      allow_promotion_codes: false,
     });
 
-    const url = result?.paymentLink?.url;
-    if (!url) {
+    if (!session?.url) {
       return NextResponse.json(
-        { error: "Failed to create payment link" },
+        { error: "Failed to create Stripe Checkout Session" },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ url });
+    return NextResponse.json({ url: session.url });
   } catch (err: unknown) {
-    console.error("Square checkout error", err);
+    console.error("Stripe checkout error", err);
     const message =
       err instanceof Error ? err.message : "Internal Server Error";
     return NextResponse.json({ error: message }, { status: 500 });
