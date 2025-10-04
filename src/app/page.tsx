@@ -15,6 +15,7 @@ import {
 import GalleryWrapper from "./components/GalleryWrapper";
 import { useState } from "react";
 import { useCart } from "./context/CartContext";
+import Script from "next/script";
 
 export default function Home() {
   const [showFullBio, setShowFullBio] = useState(false);
@@ -153,20 +154,23 @@ export default function Home() {
 
               <div className="space-y-4 text-[var(--clr-text-muted)]">
                 <p className="drop-cap">
-                  Juliet Musgrave - Dragonjulzart. Born in Sydney and lived
-                  throughout regional country NSW and Sydney suburbs. Moved to
-                  South-East Queensland in the 1990&apos;s, raising my family
-                  and pursuing a career in horticulture and natural resources.
-                  Currently, I live in the beautiful Mary Valley Queensland.
+                  Juliet Musgrave, known artistically as Dragonjulzart, was born
+                  in Sydney and has lived across regional New South Wales and
+                  the Sydney suburbs. She moved to South-East Queensland in the
+                  1990s, where she raised her family and pursued a career in
+                  horticulture and natural resource management. She now resides
+                  in the beautiful Mary Valley, Queensland.
                 </p>
 
                 <p>
-                  Art has mainly been a hobby, with periods of dabbling in
-                  various mediums of graphite, charcoal, oil pastel, soft pastel
-                  and acrylic. I enjoy various creative activities of weaving
-                  with cats claw and natural fibres, painting wearable art, sign
-                  writing and small volunteer projects while encouraging all
-                  ages to enjoy the magic of creating.
+                  Art has long been a passion for Juliet, evolving through
+                  periods of exploration across various mediums including
+                  graphite, charcoal, oil pastel, soft pastel, and acrylic. She
+                  enjoys creative activities such as weaving with cat’s claw and
+                  natural fibres, painting wearable art, sign writing, and
+                  contributing to small volunteer projects. Through her work,
+                  she encourages people of all ages to experience the joy and
+                  mindfulness of creating.
                 </p>
 
                 {/* Hidden content that shows on read more */}
@@ -177,33 +181,34 @@ export default function Home() {
                 >
                   <div className="space-y-4">
                     <p>
-                      Recent life events have refocused art as an important
-                      aspect of my self-expression. I am greatly influenced by
-                      Australian and European Realism and Impressionists
-                      including Fred Mc Cubbin, Tom Roberts, Monet, Van Gogh,
-                      Albert Namatjira and more recently Chris Postle and Kerri
-                      Dixon.
+                      In recent years, life events have refocused art as a
+                      central form of self-expression. Her work is influenced by
+                      Australian and European Realist and Impressionist artists
+                      including Fred McCubbin, Tom Roberts, Monet, Van Gogh,
+                      Albert Namatjira, and, more recently, Chris Postle and
+                      Kerri Dixon.
                     </p>
 
                     <p>
-                      I create for enjoyment, mindfulness and to capture the
-                      essence and character of my subject through form, colour
-                      and light, with focus on my love of nature, horizons,
-                      rustic relics and the Australian landscape in general.
+                      Juliet creates for enjoyment and mindfulness, aiming to
+                      capture the essence and character of her subjects through
+                      form, colour, and light. Her art often reflects her love
+                      of nature, horizons, rustic relics, and the Australian
+                      landscape.
                     </p>
 
                     <p>
-                      I have completed several small murals which can be viewed
-                      at Top Café Kenilworth along with wearable artwork
-                      displayed at Wild Pixie in Amamoor on weekends. In 2023 I
-                      received highly commended Novice section at Mary Valley
-                      Art Fest for &quot;Bad to the Bone&quot; and highly
-                      commended for &quot;Big Red&quot; Gourmay section in
-                      Kenilworth Art Show 2025.
+                      She has completed several small murals that can be viewed
+                      at Top Café Kenilworth, with wearable artworks displayed
+                      at Wild Pixie in Amamoor on weekends. In 2023, Juliet
+                      received Highly Commended in the Novice section of the
+                      Mary Valley Art Fest for Bad to the Bone, and Highly
+                      Commended again in the Gourmay section of the Kenilworth
+                      Art Show 2025 for Big Red.
                     </p>
 
                     <p>
-                      Many of my creations are displayed on my Instagram page
+                      Many of Juliet’s creations can be viewed on Instagram at
                       @Dragonjulzart.
                     </p>
                   </div>
@@ -230,7 +235,7 @@ export default function Home() {
                 <div className="text-center">
                   <div className="w-48 h-48 rounded-full mx-auto mb-6 overflow-hidden border-2 border-[var(--clr-primary)]/30">
                     <img
-                      src="/logo.jpg"
+                      src="/julz_image.webp"
                       alt="Juliet Musgrave"
                       className="w-full h-full object-cover"
                     />
@@ -270,6 +275,32 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Instagram Section - display IG posts with sociable kit embedding */}
+      <section
+        id="instagram"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--clr-bg)]"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10">
+            <h3 className="text-4xl font-display font-bold text-[var(--clr-text)]">
+              Instagram
+            </h3>
+            <p className="text-[var(--clr-text-muted)]">
+              Latest posts from @dragonjulzart
+            </p>
+          </div>
+
+          <div className="bg-[var(--clr-surface)]/60 backdrop-blur-sm rounded-2xl p-4 border border-[var(--clr-primary)]/20">
+            <div className="sk-instagram-feed" data-embed-id="25606373"></div>
+          </div>
+        </div>
+
+        <Script
+          src="https://widgets.sociablekit.com/instagram-feed/widget.js"
+          strategy="lazyOnload"
+        />
       </section>
 
       {/* What's On Section - horizontally scrollable cards */}
