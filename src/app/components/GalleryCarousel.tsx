@@ -3,19 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-
-interface GalleryItem {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  available: boolean;
-  datePainted: number;
-  slug: string;
-  image: {
-    url: string;
-  };
-}
+import type { GalleryItem } from "./GalleryGrid";
 
 interface GalleryCarouselProps {
   items: GalleryItem[];
@@ -142,14 +130,18 @@ export default function GalleryCarousel({
         <div className="p-6 border-t border-[var(--clr-primary)]/20">
           <div className="flex justify-between items-start">
             <div className="flex-1">
-              <p className="text-[var(--clr-text-muted)] text-sm mb-3">
-                {currentItem.description}
-              </p>
+              {currentItem.description && (
+                <p className="text-[var(--clr-text-muted)] text-sm mb-3">
+                  {currentItem.description}
+                </p>
+              )}
               <div className="flex justify-between items-center">
-                <div className="text-sm text-[var(--clr-text-muted)]">
-                  Painted {currentItem.datePainted}
-                </div>
-                {currentItem.available && (
+                {currentItem.number != null && (
+                  <div className="text-sm text-[var(--clr-text-muted)]">
+                    #{currentItem.number}
+                  </div>
+                )}
+                {currentItem.price != null && (
                   <div className="text-lg font-semibold text-[var(--clr-accent)]">
                     ${currentItem.price.toLocaleString()}
                   </div>
@@ -157,7 +149,7 @@ export default function GalleryCarousel({
               </div>
             </div>
 
-            {currentItem.available && (
+            {currentItem.price != null && (
               <button className="ml-6 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-6 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider cursor-pointer">
                 Add to Cart
               </button>

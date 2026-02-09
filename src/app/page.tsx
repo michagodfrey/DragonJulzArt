@@ -13,6 +13,7 @@ import {
   Award,
 } from "lucide-react";
 import GalleryWrapper from "./components/GalleryWrapper";
+import MuralsGrid from "./components/MuralsGrid";
 import { useState } from "react";
 import { useCart } from "./context/CartContext";
 import Script from "next/script";
@@ -166,7 +167,7 @@ export default function Home() {
                   Art has long been a passion for Juliet, evolving through
                   periods of exploration across various mediums including
                   graphite, charcoal, oil pastel, soft pastel, and acrylic. She
-                  enjoys creative activities such as weaving with cat’s claw and
+                  enjoys creative activities such as weaving with cat's claw and
                   natural fibres, painting wearable art, sign writing, and
                   contributing to small volunteer projects. Through her work,
                   she encourages people of all ages to experience the joy and
@@ -208,7 +209,7 @@ export default function Home() {
                     </p>
 
                     <p>
-                      Many of Juliet’s creations can be viewed on Instagram at
+                      Many of Juliet's creations can be viewed on Instagram at
                       @Dragonjulzart.
                     </p>
                   </div>
@@ -293,7 +294,7 @@ export default function Home() {
           </div>
 
           <div className="bg-[var(--clr-surface)]/60 backdrop-blur-sm rounded-2xl p-4 border border-[var(--clr-primary)]/20">
-            <div className="sk-instagram-feed" data-embed-id="25606373"></div>
+            <div className="sk-instagram-feed" data-embed-id="25652822"></div>
           </div>
         </div>
 
@@ -383,6 +384,26 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Murals Section - grid gallery of mural images */}
+      <section
+        id="murals"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--clr-bg)]"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h3 className="text-4xl font-display font-bold text-[var(--clr-text)] mb-4">
+              Murals & Public Works
+            </h3>
+            <p className="text-[var(--clr-text-muted)] max-w-2xl mx-auto">
+              Street art and community murals bringing colour and character to
+              local spaces across Queensland
+            </p>
+          </div>
+
+          <MuralsGrid />
         </div>
       </section>
 

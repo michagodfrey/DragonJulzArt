@@ -7,13 +7,12 @@ import { useState } from "react";
 import GalleryCarousel from "./GalleryCarousel";
 import { useCart } from "../context/CartContext";
 
-interface GalleryItem {
+export interface GalleryItem {
   id: string;
   title: string;
-  description: string;
-  price: number;
-  available: boolean;
-  datePainted: number;
+  description?: string;
+  price?: number;
+  number?: number;
   slug: string;
   image: {
     url: string;
@@ -21,34 +20,34 @@ interface GalleryItem {
 }
 
 export default function GalleryGrid() {
-  console.log("🎨 GalleryGrid component rendering...");
-
   const [carouselOpen, setCarouselOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { addItem } = useCart();
 
   const { loading, error, data } = useQuery(GET_GALLERY_ITEMS);
 
-  console.log("📊 Query state:", {
-    loading,
-    hasError: !!error,
-    errorMessage: error?.message,
-    hasData: !!data,
-    dataKeys: data ? Object.keys(data) : [],
-    galleriesCount: data?.galleries?.length || 0,
-  });
-
-  if (error) {
-    console.error("❌ GraphQL Error:", {
-      message: error.message,
-      graphQLErrors: error.graphQLErrors,
-      networkError: error.networkError,
-      extraInfo: error.extraInfo,
-    });
-  }
+  const rawGalleries = data?.galleries ?? [];
+  const galleries: GalleryItem[] = rawGalleries.map(
+    (g: {
+      id: string;
+      title: string;
+      description?: string;
+      price?: number;
+      number?: number;
+      slug: string;
+      image: { url: string };
+    }) => ({
+      id: g.id,
+      title: g.title,
+      description: g.description,
+      price: g.price,
+      number: g.number,
+      slug: g.slug,
+      image: g.image,
+    }),
+  );
 
   if (loading) {
-    console.log("⏳ Loading gallery data...");
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[...Array(6)].map((_, i) => (
@@ -92,15 +91,7 @@ export default function GalleryGrid() {
     );
   }
 
-  const galleries = data?.galleries || [];
-  console.log("🖼️ Gallery items found:", galleries.length);
-
-  if (galleries.length > 0) {
-    console.log("📋 First gallery item:", galleries[0]);
-  }
-
   if (galleries.length === 0) {
-    console.log("⚠️ No gallery items found in data");
     return (
       <div className="text-center py-12">
         <p className="text-[var(--clr-text-muted)]">
@@ -146,34 +137,32 @@ export default function GalleryGrid() {
                   </span>
                 </div>
               )}
-
-              {!item.available && (
-                <div className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-                  Sold
-                </div>
-              )}
             </div>
 
             <div className="p-6">
               <h4 className="font-display font-semibold text-[var(--clr-text)] mb-2 text-lg">
                 {item.title}
               </h4>
-              <p className="text-[var(--clr-text-muted)] text-sm mb-3 line-clamp-2">
-                {item.description}
-              </p>
+              {item.description && (
+                <p className="text-[var(--clr-text-muted)] text-sm mb-3 line-clamp-2">
+                  {item.description}
+                </p>
+              )}
 
               <div className="flex justify-between items-center">
-                <div className="text-sm text-[var(--clr-text-muted)]">
-                  Painted {item.datePainted}
-                </div>
-                {item.available && (
+                {item.number != null && (
+                  <div className="text-sm text-[var(--clr-text-muted)]">
+                    #{item.number}
+                  </div>
+                )}
+                {item.price != null && (
                   <div className="text-lg font-semibold text-[var(--clr-accent)]">
                     ${item.price.toLocaleString()}
                   </div>
                 )}
               </div>
 
-              {item.available && (
+              {item.price != null && (
                 <button
                   className="w-full mt-4 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider cursor-pointer"
                   onClick={(e) => {
@@ -182,10 +171,10 @@ export default function GalleryGrid() {
                       {
                         id: item.id,
                         title: item.title,
-                        price: item.price,
+                        price: item.price!,
                         imageUrl: item.image?.url,
                       },
-                      1
+                      1,
                     );
                   }}
                 >

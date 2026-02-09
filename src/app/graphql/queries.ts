@@ -71,3 +71,37 @@ export const GET_GALLERY_ITEM_BY_SLUG = gql`
     }
   }
 `;
+
+export const GET_ALL_GALLERY_DATA = gql`
+  query GetAllGalleryData {
+    # Fetch Charcoal items
+    charcoalAndPastels {
+      id
+      title
+      description
+      slug
+      price
+      image { url }
+      __typename 
+    }
+    # Fetch Soft Pastel items (using 'number' for sorting)
+    softPastels(orderBy: number_ASC) {
+      id
+      title
+      description
+      slug
+      price
+      number
+      image { url }
+      __typename
+    }
+    # Fetch T-shirts
+    tshirts {
+      id
+      title
+      slug
+      image { url }
+      __typename
+    }
+  }
+`;
