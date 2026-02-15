@@ -13,7 +13,6 @@ import {
   Award,
 } from "lucide-react";
 import GalleryWrapper from "./components/GalleryWrapper";
-import MuralsGrid from "./components/MuralsGrid";
 import { useState } from "react";
 import { useCart } from "./context/CartContext";
 import Script from "next/script";
@@ -167,7 +166,7 @@ export default function Home() {
                   Art has long been a passion for Juliet, evolving through
                   periods of exploration across various mediums including
                   graphite, charcoal, oil pastel, soft pastel, and acrylic. She
-                  enjoys creative activities such as weaving with cat's claw and
+                  enjoys creative activities such as weaving with cat’s claw and
                   natural fibres, painting wearable art, sign writing, and
                   contributing to small volunteer projects. Through her work,
                   she encourages people of all ages to experience the joy and
@@ -209,7 +208,7 @@ export default function Home() {
                     </p>
 
                     <p>
-                      Many of Juliet's creations can be viewed on Instagram at
+                      Many of Juliet’s creations can be viewed on Instagram at
                       @Dragonjulzart.
                     </p>
                   </div>
@@ -294,7 +293,7 @@ export default function Home() {
           </div>
 
           <div className="bg-[var(--clr-surface)]/60 backdrop-blur-sm rounded-2xl p-4 border border-[var(--clr-primary)]/20">
-            <div className="sk-instagram-feed" data-embed-id="25652822"></div>
+            <div className="sk-instagram-feed" data-embed-id="25606373"></div>
           </div>
         </div>
 
@@ -403,7 +402,36 @@ export default function Home() {
             </p>
           </div>
 
-          <MuralsGrid />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { src: "/murals/1_chook shed mural_ Kenilworth.jpg", alt: "Chook Shed Mural, Kenilworth" },
+              { src: "/murals/2_johnny Cash mural_ Kenilworth.jpg", alt: "Johnny Cash Mural, Kenilworth" },
+              { src: "/murals/3_who let the dogs out mural.jpg", alt: "Who Let The Dogs Out Mural" },
+              { src: "/murals/4_mural Kilkivan.jpg", alt: "Mural, Kilkivan" },
+              { src: "/murals/5_small_Frog 2 mural.jpg", alt: "Frog Mural" },
+              { src: "/murals/6_frog rails mural.jpg", alt: "Frog Rails Mural" },
+              { src: "/murals/7_music _banner.jpg", alt: "Music Banner" },
+              { src: "/murals/8_Window mural_ aussie christmas.jpg", alt: "Aussie Christmas Window Mural" },
+              { src: "/murals/9_Kookie mural.jpg", alt: "Kookie Mural" },
+              { src: "/murals/10_Tawney mural.jpg", alt: "Tawney Mural" },
+            ].map((mural, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-xl bg-[var(--clr-surface)]/60 backdrop-blur-sm border border-[var(--clr-primary)]/20 hover:border-[var(--clr-accent)]/40 transition-all duration-300"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={mural.src}
+                    alt={mural.alt}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <p className="text-white font-medium">{mural.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

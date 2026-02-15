@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { GET_GALLERY_ITEMS } from "../graphql/queries";
+import { GET_ALL_GALLERY_DATA } from "../graphql/queries";
 import Image from "next/image";
 import { useState } from "react";
 import GalleryCarousel from "./GalleryCarousel";
@@ -13,7 +13,6 @@ export interface GalleryItem {
   description?: string;
   price?: number;
   number?: number;
-  slug: string;
   image: {
     url: string;
   };
@@ -24,9 +23,13 @@ export default function GalleryGrid() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { addItem } = useCart();
 
-  const { loading, error, data } = useQuery(GET_GALLERY_ITEMS);
+  const { loading, error, data } = useQuery(GET_ALL_GALLERY_DATA);
 
-  const rawGalleries = data?.galleries ?? [];
+  const rawGalleries = [
+    ...(data?.charcoalAndPastels ?? []),
+    ...(data?.softPastels ?? []),
+    ...(data?.tShirts ?? []),
+  ];
   const galleries: GalleryItem[] = rawGalleries.map(
     (g: {
       id: string;
@@ -34,7 +37,6 @@ export default function GalleryGrid() {
       description?: string;
       price?: number;
       number?: number;
-      slug: string;
       image: { url: string };
     }) => ({
       id: g.id,
@@ -42,7 +44,6 @@ export default function GalleryGrid() {
       description: g.description,
       price: g.price,
       number: g.number,
-      slug: g.slug,
       image: g.image,
     }),
   );
