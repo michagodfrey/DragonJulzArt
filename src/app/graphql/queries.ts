@@ -35,5 +35,28 @@ export const GET_ALL_GALLERY_DATA = gql`
       }
       __typename
     }
+    # Fetch Murals (for murals & portrait commissions section)
+    murals(orderBy: number_ASC) {
+      id
+      title
+      number
+      image {
+        url
+      }
+      __typename
+    }
+  }
+`;
+
+export const GET_MURALS = gql`
+  query GetMurals {
+    murals(orderBy: number_ASC) {
+      id
+      title
+      number
+      image {
+        url
+      }
+    }
   }
 `;
