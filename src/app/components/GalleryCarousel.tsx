@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { GalleryItem } from "./GalleryGrid";
@@ -25,6 +25,14 @@ export default function GalleryCarousel({
     setCurrentIndex(initialIndex);
   }, [initialIndex]);
 
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+  }, [items.length]);
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
+  }, [items.length]);
+
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -45,15 +53,7 @@ export default function GalleryCarousel({
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, currentIndex, onClose]);
-
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
-  };
+  }, [isOpen, onClose, goToNext, goToPrevious]);
 
   if (!isOpen || !items[currentIndex]) return null;
 

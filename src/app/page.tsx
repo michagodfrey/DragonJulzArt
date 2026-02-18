@@ -116,7 +116,7 @@ export default function Home() {
               </p>
               <a
                 href="#gallery"
-                className="bg-[var(--clr-accent)] text-[var(--clr-surface)] px-8 py-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium inline-flex items-center uppercase tracking-wider shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                className="bg-[var(--clr-accent)] text-[var(--clr-surface)] px-8 py-4 rounded-lg hover:bg-yellow-400 font-medium inline-flex items-center uppercase tracking-wider shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
                 See the Gallery
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -566,6 +566,7 @@ export default function Home() {
               <div className="flex space-x-4">
                 <a
                   href="https://instagram.com/dragonjulzart"
+                  title="Instagram"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
@@ -574,12 +575,14 @@ export default function Home() {
                 </a>
                 <a
                   href="#"
+                  title="Facebook"
                   className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
                 >
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
                   href="mailto:dragonjulzart@gmail.com"
+                  title="Email"
                   className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
                 >
                   <Mail className="w-5 h-5" />

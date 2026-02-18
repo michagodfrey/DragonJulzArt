@@ -121,7 +121,11 @@ export default function MuralsGrid() {
 
       {/* Carousel Modal */}
       <GalleryCarousel
-        items={muralsData}
+        items={muralsData.map((mural: Mural) => ({
+          id: mural.id,
+          title: mural.alt,
+          image: mural.image,
+        }))}
         initialIndex={selectedIndex}
         isOpen={carouselOpen}
         onClose={() => setCarouselOpen(false)}
