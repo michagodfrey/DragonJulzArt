@@ -473,10 +473,10 @@ export default function Home() {
           </h3>
           <p className="text-[var(--clr-text-muted)] mb-8 max-w-2xl mx-auto">
             Bring the wild spirit of our community into your home with original
-            artwork and limited edition prints
+            artwork and hand-painted T-shirts.
           </p>
           <a
-            href="#contact"
+            href="#gallery"
             className="bg-[var(--clr-accent)] text-[var(--clr-surface)] px-8 py-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium inline-flex items-center uppercase tracking-wider"
           >
             <ShoppingBag className="w-4 h-4 mr-2" />
