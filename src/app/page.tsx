@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import GalleryWrapper from "./components/GalleryWrapper";
 import MuralsSection from "./components/MuralsSection";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart } from "./context/CartContext";
 import Image from "next/image";
 import Script from "next/script";
@@ -22,12 +22,34 @@ const INSTAGRAM_EMBED_POSTS: string[] = [
   "https://www.instagram.com/p/DQhAUqsj-9v/",
 ];
 
+declare global {
+  interface Window {
+    FB?: {
+      XFBML: { parse(node?: Document | HTMLElement): void };
+    };
+  }
+}
+
 export default function Home() {
   const [showFullBio, setShowFullBio] = useState(false);
+  const [fbSdkReady, setFbSdkReady] = useState(false);
+  const fbEmbedRef = useRef<HTMLDivElement>(null);
   const { openCart, count } = useCart();
+
+  useEffect(() => {
+    if (fbSdkReady && typeof window !== "undefined" && window.FB && fbEmbedRef.current) {
+      window.FB.XFBML.parse(fbEmbedRef.current);
+    }
+  }, [fbSdkReady, showFullBio]);
 
   return (
     <div className="min-h-screen bg-[var(--clr-bg)] text-[var(--clr-text)]">
+      <Script
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0"
+        strategy="lazyOnload"
+        onLoad={() => setFbSdkReady(true)}
+      />
+      <div id="fb-root" />
       {/* Header - sticky, transparent on top, bg-surface once scrolled */}
       <header className="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent hover:bg-[var(--clr-surface)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -374,6 +396,40 @@ export default function Home() {
 
             {/* Portrait + socials + Instagram CTA (bottom right) */}
             <div className="xl:col-span-5 flex flex-col items-center xl:items-end gap-10">
+              {/* Facebook page embed */}
+              <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--clr-primary)]/20 shadow-2xl">
+                <div className="text-center mb-4">
+                  <h3 className="text-xl font-display font-bold text-[var(--clr-text)] mb-2 flex items-center justify-center gap-2">
+                    <Facebook className="w-6 h-6 text-[var(--clr-primary)]" />
+                    Follow on Facebook
+                  </h3>
+                  <p className="text-[var(--clr-text-muted)] text-sm">
+                    See upcoming events and community updates on the Facebook page.
+                  </p>
+                </div>
+                <div ref={fbEmbedRef} className="overflow-hidden rounded-xl min-h-[500px]">
+                  <div
+                    className="fb-page"
+                    data-href="https://www.facebook.com/gardenjwlz"
+                    data-tabs="timeline"
+                    data-width="340"
+                    data-height="500"
+                    data-small-header="false"
+                    data-adapt-container-width="true"
+                    data-hide-cover="false"
+                    data-show-facepile="true"
+                  />
+                </div>
+                <a
+                  href="https://www.facebook.com/gardenjwlz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 block text-center text-sm text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
+                >
+                  Open Garden Jwlz on Facebook →
+                </a>
+              </div>
+
               <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-10 border border-[var(--clr-primary)]/20 shadow-2xl">
                 <div className="text-center">
                   <div className="relative w-56 h-56 rounded-full mx-auto mb-8 overflow-hidden border-2 border-[var(--clr-primary)]/40 ring-4 ring-[var(--clr-bg)]/50">
@@ -404,14 +460,18 @@ export default function Home() {
                       <Instagram className="w-6 h-6" />
                     </a>
                     <a
-                      href="#"
+                      href="https://www.facebook.com/gardenjwlz"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
                       aria-label="Facebook"
                     >
                       <Facebook className="w-6 h-6" />
                     </a>
                     <a
-                      href="mailto:juliet@dragonjulzart.com"
+                      href="mailto:dragonjulzart@gmail.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
                       aria-label="Email"
                     >
@@ -549,7 +609,14 @@ export default function Home() {
               <h4 className="font-display font-semibold mb-4">Contact</h4>
               <ul className="space-y-2">
                 <li className="text-[var(--clr-text-muted)]">
-                  juliet@dragonjulzart.com
+                  <a
+                  href="mailto:dragonjulzart@gmail.com"
+                  title="Email"
+                  className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
+                >
+                  dragonjulzart@gmail.com
+                </a>
+                  
                 </li>
                 <li className="text-[var(--clr-text-muted)]">
                   Mary Valley, Queensland
@@ -574,18 +641,13 @@ export default function Home() {
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/gardenjwlz"
                   title="Facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
                 >
                   <Facebook className="w-5 h-5" />
-                </a>
-                <a
-                  href="mailto:dragonjulzart@gmail.com"
-                  title="Email"
-                  className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
-                >
-                  <Mail className="w-5 h-5" />
                 </a>
               </div>
             </div>
