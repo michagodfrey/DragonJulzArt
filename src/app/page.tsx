@@ -17,7 +17,7 @@ import Image from "next/image";
 import Script from "next/script";
 
 const INSTAGRAM_PROFILE = "https://instagram.com/dragonjulzart";
-// Add 1-3 post URLs from Instagram (⋮ → Embed on a post, copy the .../p/XXXXX/ link)
+
 const INSTAGRAM_EMBED_POSTS: string[] = [
   "https://www.instagram.com/p/DQhAUqsj-9v/",
 ];
@@ -200,8 +200,8 @@ export default function Home() {
             </h3>
             <p className="text-[var(--clr-text-muted)] max-w-2xl mx-auto mb-8">
               Juliet&apos;s hand-painted t-shirts and other creations are
-              available on request — no online shop yet, but you can get in touch
-              to order.
+              available on request — no online shop yet, but you can get in
+              touch to order.
             </p>
             <p className="text-[var(--clr-text-muted)] max-w-2xl mx-auto text-left sm:text-center">
               My t-shirt and other creations are currently available by
@@ -215,10 +215,22 @@ export default function Home() {
           {/* Shirt design grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
             {[
-              { src: "/shirts/T_clucka tshirt_40.webp", alt: "Clucka t-shirt design" },
-              { src: "/shirts/T_rust in peace shirt_60.webp", alt: "Rust in peace shirt design" },
-              { src: "/shirts/T_tshirt_highland cow_60.webp", alt: "Highland cow t-shirt design" },
-              { src: "/shirts/T_Unicorn_40.webp", alt: "Unicorn t-shirt design" },
+              {
+                src: "/shirts/T_clucka tshirt_40.webp",
+                alt: "Clucka t-shirt design",
+              },
+              {
+                src: "/shirts/T_rust in peace shirt_60.webp",
+                alt: "Rust in peace shirt design",
+              },
+              {
+                src: "/shirts/T_tshirt_highland cow_60.webp",
+                alt: "Highland cow t-shirt design",
+              },
+              {
+                src: "/shirts/T_Unicorn_40.webp",
+                alt: "Unicorn t-shirt design",
+              },
             ].map(({ src, alt }) => (
               <figure key={src} className="group">
                 <div className="relative aspect-square rounded-xl overflow-hidden border-2 border-[var(--clr-primary)]/25 shadow-lg">
@@ -404,13 +416,17 @@ export default function Home() {
                     Follow on Facebook
                   </h3>
                   <p className="text-[var(--clr-text-muted)] text-sm">
-                    See upcoming events and community updates on the Facebook page.
+                    See upcoming events and community updates on the Facebook
+                    page.
                   </p>
                 </div>
-                <div ref={fbEmbedRef} className="overflow-hidden rounded-xl min-h-[500px]">
+                <div
+                  ref={fbEmbedRef}
+                  className="overflow-hidden rounded-xl min-h-[500px]"
+                >
                   <div
                     className="fb-page"
-                    data-href="https://www.facebook.com/gardenjwlz"
+                    data-href="https://www.facebook.com/share/1GJ5P4aUJc/"
                     data-tabs="timeline"
                     data-width="340"
                     data-height="500"
@@ -421,15 +437,16 @@ export default function Home() {
                   />
                 </div>
                 <a
-                  href="https://www.facebook.com/gardenjwlz"
+                  href="https://www.facebook.com/share/1GJ5P4aUJc/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-3 block text-center text-sm text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
                 >
-                  Open Garden Jwlz on Facebook →
+                  See what&apos;s happening at Dragon Julz on Facebook →
                 </a>
               </div>
 
+              {/* Artist card and social links */}
               <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-10 border border-[var(--clr-primary)]/20 shadow-2xl">
                 <div className="text-center">
                   <div className="relative w-56 h-56 rounded-full mx-auto mb-8 overflow-hidden border-2 border-[var(--clr-primary)]/40 ring-4 ring-[var(--clr-bg)]/50">
@@ -460,7 +477,7 @@ export default function Home() {
                       <Instagram className="w-6 h-6" />
                     </a>
                     <a
-                      href="https://www.facebook.com/gardenjwlz"
+                      href="https://www.facebook.com/share/1GJ5P4aUJc/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
@@ -489,7 +506,8 @@ export default function Home() {
                     Follow @dragonjulzart
                   </h3>
                   <p className="text-[var(--clr-text-muted)] text-sm mb-4">
-                    Juliet is contactable on Instagram for commissions and updates.
+                    Juliet is contactable on Instagram for commissions and
+                    updates.
                   </p>
                   <a
                     href={INSTAGRAM_PROFILE}
@@ -610,13 +628,12 @@ export default function Home() {
               <ul className="space-y-2">
                 <li className="text-[var(--clr-text-muted)]">
                   <a
-                  href="mailto:dragonjulzart@gmail.com"
-                  title="Email"
-                  className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
-                >
-                  dragonjulzart@gmail.com
-                </a>
-                  
+                    href="mailto:dragonjulzart@gmail.com"
+                    title="Email"
+                    className="text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
+                  >
+                    dragonjulzart@gmail.com
+                  </a>
                 </li>
                 <li className="text-[var(--clr-text-muted)]">
                   Mary Valley, Queensland
@@ -641,7 +658,7 @@ export default function Home() {
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://www.facebook.com/gardenjwlz"
+                  href="https://www.facebook.com/share/1GJ5P4aUJc/"
                   title="Facebook"
                   target="_blank"
                   rel="noopener noreferrer"
