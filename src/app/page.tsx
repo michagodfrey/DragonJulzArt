@@ -10,13 +10,11 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import GalleryWrapper from "./components/GalleryWrapper";
-import MuralsSection from "./components/MuralsSection";
+import MuralsGrid from "./components/MuralsGrid";
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "./context/CartContext";
 import Image from "next/image";
 import Script from "next/script";
-
-const INSTAGRAM_PROFILE = "https://instagram.com/dragonjulzart";
 
 const INSTAGRAM_EMBED_POSTS: string[] = [
   "https://www.instagram.com/p/DQhAUqsj-9v/",
@@ -184,7 +182,7 @@ export default function Home() {
             </p>
           </div>
 
-          <MuralsSection />
+          <MuralsGrid />
         </div>
       </section>
 
@@ -275,11 +273,64 @@ export default function Home() {
 
         <div className="relative z-10 max-w-7xl mx-auto">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-[var(--clr-text)] text-center mb-6 tracking-tight">
-            About Juliet & Our Community
+            About Juliet &amp; Our Community
           </h2>
-          <p className="text-[var(--clr-text-muted)] text-center text-lg max-w-2xl mx-auto mb-20">
-            Wildlife artist & community storyteller in the Mary Valley
+          <p className="text-[var(--clr-text-muted)] text-center text-lg max-w-2xl mx-auto mb-12">
+            Wildlife artist &amp; community storyteller in the Mary Valley
           </p>
+
+          {/* Artist banner — landscape on md+, centred card on small */}
+          <div className="mb-16 bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl border border-[var(--clr-primary)]/20 shadow-2xl overflow-hidden">
+            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 p-8 md:px-12 md:py-10">
+              {/* Portrait */}
+              <div className="relative w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 shrink-0 rounded-full overflow-hidden border-2 border-[var(--clr-primary)]/40 ring-4 ring-[var(--clr-bg)]/50">
+                <Image
+                  src="/julz_image.webp"
+                  alt="Juliet Musgrave"
+                  fill
+                  className="object-cover"
+                  sizes="144px"
+                />
+              </div>
+              {/* Name & title */}
+              <div className="text-center md:text-left grow">
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-[var(--clr-text)] mb-1">
+                  Juliet &quot;Julz&quot; Musgrave
+                </h3>
+                <p className="text-[var(--clr-text-muted)] text-base md:text-lg">
+                  Wildlife Artist &amp; Community Storyteller
+                </p>
+              </div>
+              {/* Social links */}
+              <div className="flex items-center gap-5 shrink-0">
+                <a
+                  href="https://instagram.com/dragonjulzart"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-7 h-7" />
+                </a>
+                <a
+                  href="https://www.facebook.com/gardenjulz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-7 h-7" />
+                </a>
+                <a
+                  href="mailto:dragonjulzart@gmail.com"
+                  className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
+                  aria-label="Email"
+                >
+                  <Mail className="w-7 h-7" />
+                </a>
+              </div>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-16 xl:gap-20 items-start">
             {/* Main content: bio + awards strip */}
@@ -306,8 +357,9 @@ export default function Home() {
                     experience the joy and mindfulness of creating.
                   </p>
 
+                  {/* Extended bio — always visible on md+, toggled on mobile */}
                   <div
-                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    className={`overflow-hidden transition-all duration-500 ease-in-out md:!max-h-none md:!opacity-100 ${
                       showFullBio
                         ? "max-h-[800px] opacity-100"
                         : "max-h-0 opacity-0"
@@ -348,9 +400,10 @@ export default function Home() {
                     </div>
                   </div>
 
+                  {/* Read more/less — mobile only */}
                   <button
                     onClick={() => setShowFullBio(!showFullBio)}
-                    className="flex items-center space-x-2 text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors font-semibold mt-2"
+                    className="md:hidden flex items-center space-x-2 text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors font-semibold mt-2"
                   >
                     <span>{showFullBio ? "Read Less" : "Read More"}</span>
                     {showFullBio ? (
@@ -362,8 +415,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Award-winning works + certificate */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {/* Award-winning works */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <figure className="group">
                   <div className="relative aspect-[3/4] rounded-xl overflow-hidden border-2 border-[var(--clr-primary)]/25 shadow-lg mb-3">
                     <Image
@@ -371,7 +424,7 @@ export default function Home() {
                       alt="Bad to the Bone, soft pastel"
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
@@ -391,7 +444,7 @@ export default function Home() {
                       alt="Big Red, pastel"
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
@@ -406,7 +459,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Portrait + socials + Instagram CTA (bottom right) */}
+            {/* Socials sidebar: Facebook embed + Instagram post */}
             <div className="xl:col-span-5 flex flex-col items-center xl:items-end gap-10">
               {/* Facebook page embed */}
               <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--clr-primary)]/20 shadow-2xl">
@@ -426,7 +479,7 @@ export default function Home() {
                 >
                   <div
                     className="fb-page"
-                    data-href="https://www.facebook.com/share/1GJ5P4aUJc/"
+                    data-href="https://www.facebook.com/gardenjulz"
                     data-tabs="timeline"
                     data-width="340"
                     data-height="500"
@@ -437,7 +490,7 @@ export default function Home() {
                   />
                 </div>
                 <a
-                  href="https://www.facebook.com/share/1GJ5P4aUJc/"
+                  href="https://www.facebook.com/gardenjulz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-3 block text-center text-sm text-[var(--clr-primary)] hover:text-[var(--clr-accent)] transition-colors"
@@ -446,80 +499,28 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Artist card and social links */}
-              <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-10 border border-[var(--clr-primary)]/20 shadow-2xl">
-                <div className="text-center">
-                  <div className="relative w-56 h-56 rounded-full mx-auto mb-8 overflow-hidden border-2 border-[var(--clr-primary)]/40 ring-4 ring-[var(--clr-bg)]/50">
-                    <Image
-                      src="/julz_image.webp"
-                      alt="Juliet Musgrave"
-                      fill
-                      className="object-cover"
-                      sizes="224px"
-                    />
-                  </div>
-
-                  <h3 className="text-2xl font-display font-bold text-[var(--clr-text)] mb-2">
-                    Juliet &quot;Julz&quot; Musgrave
-                  </h3>
-                  <p className="text-[var(--clr-text-muted)] text-lg mb-6">
-                    Wildlife Artist & Community Storyteller
-                  </p>
-
-                  <div className="flex justify-center gap-5">
+              {/* Instagram post embed */}
+              {INSTAGRAM_EMBED_POSTS.length > 0 && (
+                <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--clr-primary)]/20 shadow-2xl">
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl font-display font-bold text-[var(--clr-text)] mb-2 flex items-center justify-center gap-2">
+                      <Instagram className="w-6 h-6 text-[var(--clr-primary)]" />
+                      Follow @dragonjulzart
+                    </h3>
+                    <p className="text-[var(--clr-text-muted)] text-sm mb-4">
+                      Juliet is contactable on Instagram for commissions and
+                      updates.
+                    </p>
                     <a
                       href="https://instagram.com/dragonjulzart"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
-                      aria-label="Instagram"
+                      className="inline-flex items-center gap-2 rounded-full bg-[var(--clr-primary)]/20 hover:bg-[var(--clr-primary)]/30 text-[var(--clr-primary)] font-semibold px-5 py-2.5 transition-colors"
                     >
-                      <Instagram className="w-6 h-6" />
-                    </a>
-                    <a
-                      href="https://www.facebook.com/share/1GJ5P4aUJc/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
-                      aria-label="Facebook"
-                    >
-                      <Facebook className="w-6 h-6" />
-                    </a>
-                    <a
-                      href="mailto:dragonjulzart@gmail.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[var(--clr-text-muted)] hover:text-[var(--clr-primary)] transition-colors"
-                      aria-label="Email"
-                    >
-                      <Mail className="w-6 h-6" />
+                      View profile on Instagram
+                      <ArrowRight className="w-4 h-4" />
                     </a>
                   </div>
-                </div>
-              </div>
-
-              {/* Instagram follow CTA + official post embeds */}
-              <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--clr-primary)]/20 shadow-2xl">
-                <div className="text-center mb-6">
-                  <h3 className="text-xl font-display font-bold text-[var(--clr-text)] mb-2 flex items-center justify-center gap-2">
-                    <Instagram className="w-6 h-6 text-[var(--clr-primary)]" />
-                    Follow @dragonjulzart
-                  </h3>
-                  <p className="text-[var(--clr-text-muted)] text-sm mb-4">
-                    Juliet is contactable on Instagram for commissions and
-                    updates.
-                  </p>
-                  <a
-                    href={INSTAGRAM_PROFILE}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-[var(--clr-primary)]/20 hover:bg-[var(--clr-primary)]/30 text-[var(--clr-primary)] font-semibold px-5 py-2.5 transition-colors"
-                  >
-                    View profile on Instagram
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-                {INSTAGRAM_EMBED_POSTS.length > 0 && (
                   <div className="w-full [&_.instagram-media]:max-w-full [&_.instagram-media]:!min-w-0">
                     {INSTAGRAM_EMBED_POSTS.slice(0, 1).map((permalink) => (
                       <blockquote
@@ -530,8 +531,8 @@ export default function Home() {
                       />
                     ))}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -658,7 +659,7 @@ export default function Home() {
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://www.facebook.com/share/1GJ5P4aUJc/"
+                  href="https://www.facebook.com/gardenjulz"
                   title="Facebook"
                   target="_blank"
                   rel="noopener noreferrer"

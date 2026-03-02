@@ -6,13 +6,38 @@ import { useCart } from "../context/CartContext";
 
 export default function CartModal() {
   const { isOpen, closeCart, items, removeItem, total } = useCart();
-  const [comingSoon, setComingSoon] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const checkout = async () => {
-    // Temporarily disable checkout and show coming soon message
-    setComingSoon(true);
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError(err instanceof Error ? err.message : "An unexpected error occurred");
+      setLoading(false);
+    }
   };
 
   return (
@@ -77,51 +102,22 @@ export default function CartModal() {
               </span>
             </div>
 
+            {error && (
+              <div className="text-red-500 text-sm mt-2 p-2 bg-red-100/10 rounded border border-red-500/20">
+                {error}
+              </div>
+            )}
+
             <button
               onClick={checkout}
-              className="cursor-pointer w-full bg-[var(--clr-accent)] text-[var(--clr-surface)] py-3 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider"
+              disabled={loading}
+              className="cursor-pointer w-full bg-[var(--clr-accent)] text-[var(--clr-surface)] py-3 rounded-lg hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium uppercase tracking-wider"
             >
-              Checkout
+              {loading ? "Processing..." : "Checkout"}
             </button>
           </div>
         )}
       </div>
-      {comingSoon && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setComingSoon(false)}
-          />
-          <div className="relative z-10 bg-[var(--clr-surface)] text-[var(--clr-text)] p-6 rounded-xl border border-[var(--clr-primary)]/20 max-w-sm w-full mx-4 text-center">
-            <h3 className="text-xl font-display font-semibold mb-2">
-              Shop coming soon
-            </h3>
-            <p className="text-[var(--clr-text-muted)] mb-4">
-              To purchase, please email{" "}
-              <a
-                href="mailto:dragonjulzart@gmail.com"
-                className="text-[var(--clr-primary)] underline"
-              >
-                dragonjulzart@gmail.com
-              </a>
-            </p>
-            <div className="flex gap-3 justify-center">
-              <a
-                href="mailto:dragonjulzart@gmail.com"
-                className="bg-[var(--clr-accent)] text-[var(--clr-surface)] px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors"
-              >
-                Contact
-              </a>
-              <button
-                onClick={() => setComingSoon(false)}
-                className="px-4 py-2 border rounded-md"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
