@@ -407,7 +407,7 @@ export default function Home() {
                 <figure className="group">
                   <div className="relative aspect-[3/4] rounded-xl overflow-hidden border-2 border-[var(--clr-primary)]/25 shadow-lg mb-3">
                     <Image
-                      src="/artist/1_Bad to the bone soft pastel _novice_Mary Valley art 2023.webp"
+                      src="/1_Bad to the bone soft pastel _novice_Mary Valley art 2023.webp"
                       alt="Bad to the Bone, soft pastel"
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -427,7 +427,7 @@ export default function Home() {
                 <figure className="group">
                   <div className="relative aspect-[3/4] rounded-xl overflow-hidden border-2 border-[var(--clr-primary)]/25 shadow-lg mb-3">
                     <Image
-                      src="/artist/2_Big Red_ pastel_highly commended_Gourmay_Kenilworth Art Fest 2025.webp"
+                      src="/2_Big Red_ pastel_highly commended_Gourmay_Kenilworth Art Fest 2025.webp"
                       alt="Big Red, pastel"
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
