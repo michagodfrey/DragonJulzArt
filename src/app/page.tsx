@@ -11,10 +11,11 @@ import {
 } from "lucide-react";
 import GalleryWrapper from "./components/GalleryWrapper";
 import MuralsGrid from "./components/MuralsGrid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "./context/CartContext";
 import Image from "next/image";
 import Script from "next/script";
+import type { StripeProduct } from "./api/products/route";
 
 const INSTAGRAM_EMBED_POSTS: string[] = [
   "https://www.instagram.com/p/DQhAUqsj-9v/",
@@ -30,8 +31,23 @@ declare global {
 
 export default function Home() {
   const [showFullBio, setShowFullBio] = useState(false);
+  const [exhibitionPainting, setExhibitionPainting] = useState<StripeProduct | null>(null);
+  const [loadingExhibition, setLoadingExhibition] = useState(true);
   const { openCart, count } = useCart();
 
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json() as Promise<StripeProduct[]>)
+      .then((products) => {
+        const painting = products.find((p) => p.metadata?.status === "exhibition");
+        setExhibitionPainting(painting || null);
+      })
+      .catch((err) => {
+        console.error("Failed to load exhibition painting:", err);
+        setExhibitionPainting(null);
+      })
+      .finally(() => setLoadingExhibition(false));
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--clr-bg)] text-[var(--clr-text)]">
@@ -128,6 +144,114 @@ export default function Home() {
                 See the Gallery
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What's On Section */}
+      <section
+        id="whats-on"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--clr-bg)]"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h3 className="text-4xl font-display font-bold text-[var(--clr-text)] mb-4">
+              What&apos;s On
+            </h3>
+            <p className="text-[var(--clr-text-muted)] max-w-2xl mx-auto">
+              Upcoming exhibitions and events featuring Dragon Julz Art.
+            </p>
+          </div>
+
+          <div className="bg-[var(--clr-surface)] rounded-2xl border border-[var(--clr-primary)]/20 overflow-hidden hover:border-[var(--clr-primary)]/40 transition-colors">
+            <div className="grid md:grid-cols-2 gap-8 p-8">
+              {/* Event Details */}
+              <div className="flex flex-col justify-center">
+                <h4 className="text-3xl font-display font-bold text-[var(--clr-text)] mb-4">
+                  Kenilworth ArtsFest
+                </h4>
+                <p className="text-[var(--clr-text-muted)] mb-6 text-lg">
+                  Celebrating local arts and community creativity
+                </p>
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-start space-x-4">
+                    <span className="text-[var(--clr-primary)] font-bold text-lg min-w-fit">
+                      📅
+                    </span>
+                    <div>
+                      <p className="font-semibold text-[var(--clr-text)]">
+                        May 23-24, 2026
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-4">
+                    <span className="text-[var(--clr-primary)] font-bold text-lg min-w-fit">
+                      🎨
+                    </span>
+                    <div>
+                      <p className="font-semibold text-[var(--clr-text)]">
+                        7 Maleny Kenilworth Rd, Kenilworth QLD 4574
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="https://www.facebook.com/events/s/kenilworth-artsfest/2211300316281061/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center bg-[var(--clr-primary)] text-[var(--clr-surface)] px-6 py-3 rounded-lg hover:bg-[var(--clr-primary)]/80 transition-colors font-medium uppercase tracking-wider w-fit"
+                >
+                  <Facebook className="w-4 h-4 mr-2" />
+                  Learn More
+                </a>
+              </div>
+
+              {/* Painting Display */}
+              <div className="flex items-center justify-center">
+                {loadingExhibition ? (
+                  <div className="w-full aspect-square bg-[var(--clr-primary)]/5 rounded-lg border-2 border-[var(--clr-primary)]/20 flex items-center justify-center min-h-80 animate-pulse" />
+                ) : exhibitionPainting ? (
+                  <div className="w-full">
+                    <div className="relative aspect-square rounded-lg overflow-hidden border-2 border-[var(--clr-primary)]/25 shadow-lg mb-4">
+                      <Image
+                        src={exhibitionPainting.imageUrl || ""}
+                        alt={exhibitionPainting.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                    <div className="text-center">
+                      <h5 className="text-lg font-display font-semibold text-[var(--clr-text)] mb-2">
+                        {exhibitionPainting.name}
+                      </h5>
+                      <p className="text-[var(--clr-text-muted)] text-sm mb-3">
+                        {exhibitionPainting.description}
+                      </p>
+                      <p className="text-[var(--clr-primary)] font-semibold text-sm">
+                        🎨 Available for purchase at the exhibition only
+                      </p>
+                      {exhibitionPainting.price && (
+                        <p className="text-[var(--clr-text)] font-bold mt-2">
+                          ${exhibitionPainting.price.toFixed(2)}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-full aspect-square bg-gradient-to-br from-[var(--clr-primary)]/10 to-[var(--clr-primary)]/5 rounded-lg border-2 border-dashed border-[var(--clr-primary)]/30 flex items-center justify-center min-h-80">
+                    <div className="text-center">
+                      <p className="text-[var(--clr-text-muted)] text-lg font-medium">
+                        Painting on Display
+                      </p>
+                      <p className="text-[var(--clr-text-muted)] text-sm mt-2">
+                        Coming soon
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -618,7 +742,9 @@ export default function Home() {
 
             {/* Social */}
             <div>
-              <h4 className="font-display font-semibold mb-4">Follow and Contact</h4>
+              <h4 className="font-display font-semibold mb-4">
+                Follow and Contact
+              </h4>
               <div className="flex space-x-4">
                 <a
                   href="https://instagram.com/dragonjulzart"

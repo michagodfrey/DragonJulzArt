@@ -7,6 +7,7 @@ export interface StripeProduct {
   description: string | null;
   price: number | null; // major units (e.g. 150.00 AUD)
   imageUrl: string | null;
+  metadata?: Record<string, string>;
 }
 
 function assertEnv(name: string): string {
@@ -60,6 +61,7 @@ export async function GET() {
           description: p.description ?? null,
           price: unitAmount,
           imageUrl: p.images?.[0] ?? null,
+          metadata: p.metadata ?? {},
         };
       })
       // Sort alphabetically by name

@@ -5,13 +5,15 @@ import GalleryGrid, { GalleryItem } from "./GalleryGrid";
 import type { StripeProduct } from "../api/products/route";
 
 function mapToGalleryItems(products: StripeProduct[]): GalleryItem[] {
-  return products.map((p) => ({
-    id: p.id,
-    title: p.name,
-    description: p.description ?? undefined,
-    price: p.price ?? undefined,
-    image: { url: p.imageUrl ?? "" },
-  }));
+  return products
+    .filter((p) => p.metadata?.status !== "exhibition")
+    .map((p) => ({
+      id: p.id,
+      title: p.name,
+      description: p.description ?? undefined,
+      price: p.price ?? undefined,
+      image: { url: p.imageUrl ?? "" },
+    }));
 }
 
 export default function GalleryWrapper() {
