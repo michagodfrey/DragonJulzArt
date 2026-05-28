@@ -31,15 +31,19 @@ declare global {
 
 export default function Home() {
   const [showFullBio, setShowFullBio] = useState(false);
-  const [exhibitionPainting, setExhibitionPainting] = useState<StripeProduct | null>(null);
+  const [exhibitionPainting, setExhibitionPainting] =
+    useState<StripeProduct | null>(null);
   const [loadingExhibition, setLoadingExhibition] = useState(true);
   const { openCart, count } = useCart();
+  const isSold = exhibitionPainting?.metadata?.sold?.toLowerCase() === "true";
 
   useEffect(() => {
     fetch("/api/products")
       .then((res) => res.json() as Promise<StripeProduct[]>)
       .then((products) => {
-        const painting = products.find((p) => p.metadata?.status === "exhibition");
+        const painting = products.find(
+          (p) => p.metadata?.status === "exhibition",
+        );
         setExhibitionPainting(painting || null);
       })
       .catch((err) => {
@@ -160,7 +164,12 @@ export default function Home() {
               What&apos;s On
             </h3>
             <p className="text-[var(--clr-text-muted)] max-w-2xl mx-auto">
-              Upcoming exhibitions and events featuring Dragon Julz Art.
+              No upcoming events at this time. Future work will include social
+              media embeds and live event updates.
+            </p>
+            <p className="text-[var(--clr-text-muted)] max-w-2xl mx-auto mt-4">
+              Past events are listed below — visit the Facebook page for more
+              details.
             </p>
           </div>
 
@@ -169,10 +178,10 @@ export default function Home() {
               {/* Event Details */}
               <div className="flex flex-col justify-center">
                 <h4 className="text-3xl font-display font-bold text-[var(--clr-text)] mb-4">
-                  Kenilworth ArtsFest
+                  Past event: Kenilworth ArtsFest
                 </h4>
                 <p className="text-[var(--clr-text-muted)] mb-6 text-lg">
-                  Celebrating local arts and community creativity
+                  Celebrating local arts and community creativity.
                 </p>
                 <div className="space-y-4 mb-8">
                   <div className="flex items-start space-x-4">
@@ -181,7 +190,7 @@ export default function Home() {
                     </span>
                     <div>
                       <p className="font-semibold text-[var(--clr-text)]">
-                        May 23-24, 2026
+                        May 23-24, 2026 (past event)
                       </p>
                     </div>
                   </div>
@@ -203,8 +212,12 @@ export default function Home() {
                   className="inline-flex items-center bg-[var(--clr-primary)] text-[var(--clr-surface)] px-6 py-3 rounded-lg hover:bg-[var(--clr-primary)]/80 transition-colors font-medium uppercase tracking-wider w-fit"
                 >
                   <Facebook className="w-4 h-4 mr-2" />
-                  Learn More
+                  View Past Event
                 </a>
+                <p className="text-[var(--clr-text-muted)] text-sm mt-4 max-w-md">
+                  Past events are still available on Facebook, and future
+                  updates will include embedded social content here.
+                </p>
               </div>
 
               {/* Painting Display */}
@@ -221,6 +234,13 @@ export default function Home() {
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
+                      {isSold && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                          <span className="bg-red-600 text-white uppercase text-sm font-bold tracking-[0.2em] px-4 py-2 rounded-lg shadow-lg">
+                            Sold
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <div className="text-center">
                       <h5 className="text-lg font-display font-semibold text-[var(--clr-text)] mb-2">
@@ -229,9 +249,20 @@ export default function Home() {
                       <p className="text-[var(--clr-text-muted)] text-sm mb-3">
                         {exhibitionPainting.description}
                       </p>
-                      <p className="text-[var(--clr-primary)] font-semibold text-sm">
-                        🎨 Available for purchase at the exhibition only
-                      </p>
+                      {isSold ? (
+                        <>
+                          <p className="text-[var(--clr-primary)] font-semibold text-sm mb-2">
+                            🎨 Sold
+                          </p>
+                          <p className="text-[var(--clr-text)] font-semibold text-sm">
+                            Available for printed T-shirts
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-[var(--clr-primary)] font-semibold text-sm">
+                          🎨 Available for purchase at the exhibition only
+                        </p>
+                      )}
                       {exhibitionPainting.price && (
                         <p className="text-[var(--clr-text)] font-bold mt-2">
                           ${exhibitionPainting.price.toFixed(2)}
@@ -365,7 +396,7 @@ export default function Home() {
         {/* Subtle background: collage with strong overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/artist/3_Collage_pastel and tshirt designs.webp"
+            src="/3_Collage_pastel and tshirt designs.webp"
             alt=""
             fill
             className="object-cover scale-105"
