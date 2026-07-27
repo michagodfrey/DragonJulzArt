@@ -17,10 +17,6 @@ import Image from "next/image";
 import Script from "next/script";
 import type { StripeProduct } from "./api/products/route";
 
-const INSTAGRAM_EMBED_POSTS: string[] = [
-  "https://www.instagram.com/p/DQhAUqsj-9v/",
-];
-
 declare global {
   interface Window {
     FB?: {
@@ -53,8 +49,19 @@ export default function Home() {
       .finally(() => setLoadingExhibition(false));
   }, []);
 
+  useEffect(() => {
+    window.FB?.XFBML.parse();
+  }, []);
+
   return (
     <div className="min-h-screen bg-[var(--clr-bg)] text-[var(--clr-text)]">
+      <div id="fb-root" />
+      <Script
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"
+        strategy="afterInteractive"
+        crossOrigin="anonymous"
+        onLoad={() => window.FB?.XFBML.parse()}
+      />
       {/* Header - sticky, transparent on top, bg-surface once scrolled */}
       <header className="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent hover:bg-[var(--clr-surface)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -601,9 +608,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Socials sidebar: Facebook embed + Instagram post */}
+            {/* Socials sidebar: Facebook feed */}
             <div className="xl:col-span-5 flex flex-col items-center xl:items-end gap-10">
-              {/* Facebook post embed */}
+              {/* Facebook page plugin */}
               <div
                 id="whats-on"
                 className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--clr-primary)]/20 shadow-2xl"
@@ -618,7 +625,7 @@ export default function Home() {
                     page.
                   </p>
                   <a
-                    href="https://www.facebook.com/people/Dragonjulzart/61587805475402/"
+                    href="https://www.facebook.com/profile.php?id=61587805475402"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-full bg-[var(--clr-primary)]/20 hover:bg-[var(--clr-primary)]/30 text-[var(--clr-primary)] font-semibold px-5 py-2.5 transition-colors"
@@ -627,64 +634,34 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
-                <div className="w-full overflow-hidden rounded-xl border border-[var(--clr-primary)]/10">
-                  <iframe
-                    src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0dbTig4WENDK1oMeEZjFaaUj41K5497YE3fAPHY61ktPqfQ4Sius6YWSRFYDnrqnHl%26id%3D61587805475402&show_text=true&width=500"
-                    width="100%"
-                    height="474"
-                    style={{ border: "none", overflow: "hidden" }}
-                    scrolling="no"
-                    frameBorder="0"
-                    allowFullScreen={true}
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                    className="w-full"
-                  />
+                <div className="w-full flex justify-center overflow-hidden rounded-xl border border-[var(--clr-primary)]/10">
+                  <div
+                    className="fb-page"
+                    data-href="https://www.facebook.com/profile.php?id=61587805475402"
+                    data-tabs="timeline,events"
+                    data-width="380"
+                    data-hide-cover="false"
+                    data-show-facepile="false"
+                    data-adapt-container-width="true"
+                  >
+                    <blockquote
+                      cite="https://www.facebook.com/profile.php?id=61587805475402"
+                      className="fb-xfbml-parse-ignore"
+                    >
+                      <a
+                        href="https://www.facebook.com/profile.php?id=61587805475402"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Dragonjulzart
+                      </a>
+                    </blockquote>
+                  </div>
                 </div>
               </div>
-
-              {/* Instagram post embed */}
-              {INSTAGRAM_EMBED_POSTS.length > 0 && (
-                <div className="w-full max-w-md bg-[var(--clr-surface)]/80 backdrop-blur-md rounded-2xl p-8 border border-[var(--clr-primary)]/20 shadow-2xl">
-                  <div className="text-center mb-6">
-                    <h3 className="text-xl font-display font-bold text-[var(--clr-text)] mb-2 flex items-center justify-center gap-2">
-                      <Instagram className="w-6 h-6 text-[var(--clr-primary)]" />
-                      Follow @dragonjulzart
-                    </h3>
-                    <p className="text-[var(--clr-text-muted)] text-sm mb-4">
-                      Juliet is contactable on Instagram for commissions and
-                      updates.
-                    </p>
-                    <a
-                      href="https://instagram.com/dragonjulzart"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-[var(--clr-primary)]/20 hover:bg-[var(--clr-primary)]/30 text-[var(--clr-primary)] font-semibold px-5 py-2.5 transition-colors"
-                    >
-                      View profile on Instagram
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                  <div className="w-full [&_.instagram-media]:max-w-full [&_.instagram-media]:!min-w-0">
-                    {INSTAGRAM_EMBED_POSTS.slice(0, 1).map((permalink) => (
-                      <blockquote
-                        key={permalink}
-                        className="instagram-media w-full"
-                        data-instgrm-permalink={permalink}
-                        data-instgrm-version="14"
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
-        {INSTAGRAM_EMBED_POSTS.length > 0 && (
-          <Script
-            src="https://www.instagram.com/embed.js"
-            strategy="lazyOnload"
-          />
-        )}
       </section>
 
       {/* CTA Section - wide banner */}
