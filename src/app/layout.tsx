@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Caveat, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./context/CartContext";
 import CartModal from "./components/CartModal";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Dragon Julz Art - Wildlife Gallery",
+  title: "DragonJulzArt — Wildlife Art by Juliet Musgrave",
   description:
-    "Capturing the wild spirit of our community through beautiful wildlife art by Juliet.",
+    "Celebrating wildlife and community through art. Original soft pastel and charcoal paintings, murals, portrait commissions and hand-painted t-shirts by Juliet 'Julz' Musgrave, based in the Mary Valley, QLD.",
 };
 
 export default function RootLayout({
@@ -27,9 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${caveat.variable} ${inter.variable} antialiased`}>
         <CartProvider>
           {children}
           <CartModal />

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { Award, ShoppingBag } from "lucide-react";
 import GalleryCarousel from "./GalleryCarousel";
 import { useCart } from "../context/CartContext";
 
@@ -11,6 +12,7 @@ export interface GalleryItem {
   description?: string;
   price?: number;
   number?: number;
+  award?: string;
   image: {
     url: string;
   };
@@ -41,7 +43,7 @@ export default function GalleryGrid({ items: galleries, categoryTitle }: Gallery
         {galleries.map((item: GalleryItem, index: number) => (
           <div
             key={item.id}
-            className="group relative overflow-hidden rounded-xl bg-[var(--clr-surface)]/60 backdrop-blur-sm border border-[var(--clr-primary)]/20 shadow-lg hover:shadow-xl hover:border-[var(--clr-accent)]/40 transition-all duration-300 cursor-pointer"
+            className="group relative overflow-hidden rounded-2xl bg-[var(--clr-surface)] border border-[var(--clr-border)] shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer"
             onClick={() => {
               setSelectedIndex(index);
               setCarouselOpen(true);
@@ -53,54 +55,63 @@ export default function GalleryGrid({ items: galleries, categoryTitle }: Gallery
                   src={item.image.url}
                   alt={item.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-[var(--clr-primary)]/20 to-[var(--clr-secondary)]/20 flex items-center justify-center">
-                  <span className="text-[var(--clr-text-muted)] text-4xl">
+                <div className="w-full h-full bg-gradient-to-br from-[var(--clr-accent)]/10 to-[var(--clr-secondary)]/10 flex items-center justify-center">
+                  <span className="text-[var(--clr-text-soft)] text-4xl">
                     🖼️
                   </span>
                 </div>
               )}
+              {item.award && (
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full shadow-sm">
+                  <Award className="w-3 h-3" />
+                  Award
+                </span>
+              )}
             </div>
 
-            <div className="p-6">
-              <h4 className="font-display font-semibold text-[var(--clr-text)] mb-2 text-lg">
+            <div className="p-5">
+              <h4 className="font-semibold text-[var(--clr-text)] mb-1 text-base">
                 {item.title}
               </h4>
+              {item.award && (
+                <p className="text-[var(--clr-secondary)] text-xs font-medium mb-1.5">
+                  {item.award}
+                </p>
+              )}
               {item.description && (
                 <p className="text-[var(--clr-text-muted)] text-sm mb-3 line-clamp-2">
                   {item.description}
                 </p>
               )}
 
-              <div className="flex justify-end items-center">
-                {item.price != null && (
-                  <div className="text-lg font-semibold text-[var(--clr-accent)]">
-                    ${item.price.toLocaleString()}
-                  </div>
-                )}
-              </div>
-
               {item.price != null && (
-                <button
-                  className="w-full mt-4 bg-[var(--clr-accent)] text-[var(--clr-surface)] py-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors font-medium uppercase tracking-wider cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addItem(
-                      {
-                        id: item.id,
-                        title: item.title,
-                        price: item.price!,
-                        imageUrl: item.image?.url,
-                      },
-                      1,
-                    );
-                  }}
-                >
-                  Add to Cart
-                </button>
+                <div className="flex items-center justify-between pt-2 mt-1 border-t border-[var(--clr-border)]">
+                  <span className="text-sm text-[var(--clr-text-soft)]">
+                    ${item.price.toLocaleString()}
+                  </span>
+                  <button
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--clr-secondary)] opacity-80 hover:opacity-100 hover:underline transition-opacity cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addItem(
+                        {
+                          id: item.id,
+                          title: item.title,
+                          price: item.price!,
+                          imageUrl: item.image?.url,
+                        },
+                        1,
+                      );
+                    }}
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    Add to cart
+                  </button>
+                </div>
               )}
             </div>
           </div>

@@ -3,9 +3,9 @@ import { ArrowLeft } from "lucide-react";
 
 export default function SuccessPage() {
   return (
-    <main className="min-h-[60vh] flex items-center justify-center px-6">
-      <div className="max-w-xl w-full text-center bg-[var(--clr-surface)]/60 backdrop-blur-sm border border-[var(--clr-primary)]/20 rounded-2xl p-8">
-        <h1 className="text-3xl font-display font-bold text-[var(--clr-text)] mb-3">
+    <main className="min-h-screen flex items-center justify-center px-6 bg-[var(--clr-bg)]">
+      <div className="max-w-xl w-full text-center bg-[var(--clr-surface)] border border-[var(--clr-border)] rounded-2xl p-10 shadow-sm">
+        <h1 className="text-4xl font-display font-bold text-[var(--clr-text)] mb-3">
           Thank you for your purchase!
         </h1>
         <p className="text-[var(--clr-text-muted)] mb-8">
@@ -14,7 +14,7 @@ export default function SuccessPage() {
         </p>
         <Link
           href="/"
-          className="bg-[var(--clr-accent)] text-[var(--clr-surface)] px-6 py-3 rounded-lg hover:bg-yellow-400 transition-colors font-medium inline-flex items-center uppercase tracking-wider"
+          className="bg-[var(--clr-secondary)] text-white px-6 py-3 rounded-full hover:bg-[var(--clr-primary)] transition-colors font-medium inline-flex items-center"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Return Home

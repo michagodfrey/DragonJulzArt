@@ -1,36 +1,39 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  /* Dragon Julz Art Theme Colors */
-  --clr-primary: #1e6fe3; /* Electric-azure */
-  --clr-secondary: #0d4f66; /* Deep teal */
-  --clr-accent: #c89b3c; /* Weathered-gold */
-  --clr-surface: #1b1b1b; /* Charcoal */
-  --clr-bg: #0f0f0f; /* Near-black */
-  --clr-text: #f5f7fa; /* Off-white */
-  --clr-text-muted: #9ba4b1; /* Secondary text */
+  /* DragonJulzArt Theme Colors — derived from the logo */
+  --clr-primary: #1b1959; /* Deep navy-indigo — headings, nav, body text */
+  --clr-secondary: #5a2d82; /* Violet-plum — accents, buttons, links */
+  --clr-accent: #2fc6c9; /* Turquoise — highlights, subtle CTAs */
+  --clr-accent-2: #5fe6dc; /* Aqua — decorative swashes */
+  --clr-bg: #fafaf8; /* Off-white — page background */
+  --clr-surface: #ffffff; /* White — card surfaces */
+  --clr-text: #1b1959; /* Primary text / headings */
+  --clr-text-muted: #55547a; /* Softened navy-grey — body copy */
+  --clr-text-soft: #8785a3; /* Captions / tertiary text */
+  --clr-border: #e7e4f2; /* Soft violet-tinted border */
 }
 
 @theme inline {
   --color-primary: var(--clr-primary);
   --color-secondary: var(--clr-secondary);
   --color-accent: var(--clr-accent);
+  --color-accent-2: var(--clr-accent-2);
   --color-surface: var(--clr-surface);
   --color-bg: var(--clr-bg);
   --color-text: var(--clr-text);
   --color-text-muted: var(--clr-text-muted);
 
-  /* Typography */
-  --font-display: "Playfair Display", serif;
-  --font-body: "Inter", sans-serif;
+  /* Typography — set by next/font in layout.tsx */
+  --font-display: var(--font-caveat), cursive;
+  --font-body: var(--font-inter), sans-serif;
 }
 
 body {
   background: var(--clr-bg);
-  color: var(--clr-text);
+  color: var(--clr-text-muted);
   font-family: var(--font-body);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* Custom scrollbar */
@@ -43,12 +46,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--clr-secondary);
+  background: var(--clr-accent);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--clr-primary);
+  background: var(--clr-secondary);
 }
 
 /* Smooth scrolling */
@@ -60,23 +63,34 @@ html {
 .drop-cap::first-letter {
   float: left;
   font-family: var(--font-display);
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: 700;
-  line-height: 1;
-  margin: 0.1em 0.1em 0 0;
-  color: var(--clr-accent);
+  line-height: 0.8;
+  margin: 0.05em 0.15em 0 0;
+  color: var(--clr-secondary);
 }
 
-/* Hero Animations */
-@keyframes zoom-in {
-  from {
-    transform: scale(1.1);
-  }
-  to {
-    transform: scale(1);
-  }
+/* Screen-reader-only utility for semantic headings behind decorative logos */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
+/* Hand-drawn brushstroke divider, echoes the logo's teal swash */
+.brush-divider {
+  display: block;
+  height: 14px;
+  width: 96px;
+}
+
+/* Hero entrance animation */
 @keyframes fade-in-delayed {
   0% {
     opacity: 0;
@@ -88,10 +102,6 @@ html {
   }
 }
 
-.animate-zoom-in {
-  animation: zoom-in 1.5s ease-out forwards;
-}
-
 .animate-fade-in-delayed {
-  animation: fade-in-delayed 1s ease-out 0.8s forwards;
+  animation: fade-in-delayed 1s ease-out 0.2s forwards;
 }

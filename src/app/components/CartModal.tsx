@@ -42,13 +42,16 @@ export default function CartModal() {
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/40" onClick={closeCart} />
-      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-[var(--clr-surface)] text-[var(--clr-text)] shadow-xl p-6 overflow-y-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-display font-semibold">Your Cart</h2>
+      <div
+        className="absolute inset-0 bg-[var(--clr-primary)]/30 backdrop-blur-sm"
+        onClick={closeCart}
+      />
+      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-[var(--clr-surface)] text-[var(--clr-text)] shadow-2xl p-6 overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-display font-semibold">Your Cart</h2>
           <button
             onClick={closeCart}
-            className="text-[var(--clr-text-muted)] hover:text-[var(--clr-text)] cursor-pointer"
+            className="text-[var(--clr-text-muted)] hover:text-[var(--clr-text)] cursor-pointer text-sm"
           >
             Close
           </button>
@@ -61,10 +64,10 @@ export default function CartModal() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex gap-3 items-center border border-[var(--clr-primary)]/20 rounded-lg p-3 bg-[var(--clr-bg)]/40"
+                className="flex gap-3 items-center border border-[var(--clr-border)] rounded-xl p-3"
               >
                 {item.imageUrl ? (
-                  <div className="relative w-16 h-16 rounded overflow-hidden">
+                  <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0">
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
@@ -73,19 +76,21 @@ export default function CartModal() {
                     />
                   </div>
                 ) : (
-                  <div className="w-16 h-16 bg-[var(--clr-surface)] rounded" />
+                  <div className="w-16 h-16 bg-[var(--clr-bg)] rounded-lg shrink-0" />
                 )}
-                <div className="flex-1">
-                  <div className="font-medium">{item.title}</div>
-                  <div className="text-[var(--clr-text-muted)]">
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-[var(--clr-text)] truncate">
+                    {item.title}
+                  </div>
+                  <div className="text-[var(--clr-text-muted)] text-sm">
                     ${item.price.toLocaleString()}
                   </div>
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm text-[var(--clr-text-muted)]">
+                  <div className="mt-1.5 flex items-center justify-between">
+                    <span className="text-xs text-[var(--clr-text-soft)]">
                       Qty 1 (unique artwork)
                     </span>
                     <button
-                      className="text-red-500 hover:underline cursor-pointer"
+                      className="text-xs text-red-600 hover:underline cursor-pointer"
                       onClick={() => removeItem(item.id)}
                     >
                       Remove
@@ -95,15 +100,15 @@ export default function CartModal() {
               </div>
             ))}
 
-            <div className="flex items-center justify-between border-t border-[var(--clr-primary)]/20 pt-4">
-              <span className="font-medium">Total</span>
-              <span className="text-lg font-semibold text-[var(--clr-accent)]">
+            <div className="flex items-center justify-between border-t border-[var(--clr-border)] pt-4">
+              <span className="font-medium text-[var(--clr-text)]">Total</span>
+              <span className="text-lg font-semibold text-[var(--clr-text)]">
                 ${total.toLocaleString()}
               </span>
             </div>
 
             {error && (
-              <div className="text-red-500 text-sm mt-2 p-2 bg-red-100/10 rounded border border-red-500/20">
+              <div className="text-red-600 text-sm mt-2 p-3 bg-red-50 rounded-lg border border-red-200">
                 {error}
               </div>
             )}
@@ -111,9 +116,9 @@ export default function CartModal() {
             <button
               onClick={checkout}
               disabled={loading}
-              className="cursor-pointer w-full bg-[var(--clr-accent)] text-[var(--clr-surface)] py-3 rounded-lg hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium uppercase tracking-wider"
+              className="cursor-pointer w-full bg-[var(--clr-secondary)] text-white py-3.5 rounded-full hover:bg-[var(--clr-primary)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
             >
-              {loading ? "Processing..." : "Checkout"}
+              {loading ? "Processing…" : "Checkout"}
             </button>
           </div>
         )}
