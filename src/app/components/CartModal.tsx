@@ -43,7 +43,7 @@ export default function CartModal() {
   return (
     <div className="fixed inset-0 z-50">
       <div
-        className="absolute inset-0 bg-[var(--clr-primary)]/30 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={closeCart}
       />
       <div className="absolute right-0 top-0 h-full w-full max-w-md bg-[var(--clr-surface)] text-[var(--clr-text)] shadow-2xl p-6 overflow-y-auto">
@@ -90,7 +90,7 @@ export default function CartModal() {
                       Qty 1 (unique artwork)
                     </span>
                     <button
-                      className="text-xs text-red-600 hover:underline cursor-pointer"
+                      className="text-xs text-red-400 hover:underline cursor-pointer"
                       onClick={() => removeItem(item.id)}
                     >
                       Remove
@@ -108,7 +108,7 @@ export default function CartModal() {
             </div>
 
             {error && (
-              <div className="text-red-600 text-sm mt-2 p-3 bg-red-50 rounded-lg border border-red-200">
+              <div className="text-red-300 text-sm mt-2 p-3 bg-red-950/40 rounded-lg border border-red-800">
                 {error}
               </div>
             )}
@@ -116,7 +116,7 @@ export default function CartModal() {
             <button
               onClick={checkout}
               disabled={loading}
-              className="cursor-pointer w-full bg-[var(--clr-secondary)] text-white py-3.5 rounded-full hover:bg-[var(--clr-primary)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+              className="cursor-pointer w-full bg-[var(--clr-button)] text-white py-3.5 rounded-full hover:bg-[var(--clr-button-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
             >
               {loading ? "Processing…" : "Checkout"}
             </button>

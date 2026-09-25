@@ -69,7 +69,7 @@ export default function GalleryWrapper() {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-600 mb-4">Error loading gallery: {error}</p>
+        <p className="text-red-400 mb-4">Error loading gallery: {error}</p>
         <p className="text-[var(--clr-text-muted)]">
           Please check your Stripe configuration and try again.
         </p>

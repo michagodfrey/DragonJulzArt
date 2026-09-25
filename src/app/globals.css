@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  /* DragonJulzArt Theme Colors — derived from the logo */
-  --clr-primary: #1b1959; /* Deep navy-indigo — headings, nav, body text */
-  --clr-secondary: #5a2d82; /* Violet-plum — accents, buttons, links */
+  /* DragonJulzArt Theme Colors — dark charcoal, derived from the dark-bg logo */
+  color-scheme: dark;
+  --clr-primary: #9d9ef2; /* Periwinkle — icons, nav */
+  --clr-secondary: #c49bf5; /* Lavender — accents, links, eyebrows */
   --clr-accent: #2fc6c9; /* Turquoise — highlights, subtle CTAs */
   --clr-accent-2: #5fe6dc; /* Aqua — decorative swashes */
-  --clr-bg: #fafaf8; /* Off-white — page background */
-  --clr-surface: #ffffff; /* White — card surfaces */
-  --clr-text: #1b1959; /* Primary text / headings */
-  --clr-text-muted: #55547a; /* Softened navy-grey — body copy */
-  --clr-text-soft: #8785a3; /* Captions / tertiary text */
-  --clr-border: #e7e4f2; /* Soft violet-tinted border */
+  --clr-button: #7a4fc4; /* Violet — solid buttons (white text) */
+  --clr-button-hover: #6540a8; /* Deeper violet — button hover */
+  --clr-bg: #1e1e21; /* Charcoal — page background */
+  --clr-surface: #26262a; /* Lighter charcoal — card surfaces, alternate sections */
+  --clr-footer: #151517; /* Near-black charcoal — footer */
+  --clr-text: #f2f1f7; /* Primary text / headings */
+  --clr-text-muted: #c3c1d4; /* Soft lavender-grey — body copy */
+  --clr-text-soft: #8f8da3; /* Captions / tertiary text */
+  --clr-border: #3a3941; /* Subtle charcoal border */
 }
 
 @theme inline {

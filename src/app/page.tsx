@@ -152,7 +152,7 @@ export default function Home() {
           <div className="flex justify-between items-center py-2.5">
             <a href="#" className="relative h-11 w-40 sm:h-12 sm:w-44 shrink-0">
               <Image
-                src="/logo-header.webp"
+                src="/logo-header-dark.webp"
                 alt="DragonJulzArt"
                 fill
                 className="object-contain object-left"
@@ -181,7 +181,7 @@ export default function Home() {
               >
                 <ShoppingBag className="w-5 h-5" />
                 {count > 0 && (
-                  <span className="absolute top-0.5 right-0.5 flex items-center justify-center w-4 h-4 rounded-full bg-[var(--clr-secondary)] text-white text-[10px] font-semibold leading-none">
+                  <span className="absolute top-0.5 right-0.5 flex items-center justify-center w-4 h-4 rounded-full bg-[var(--clr-button)] text-white text-[10px] font-semibold leading-none">
                     {count}
                   </span>
                 )}
@@ -238,9 +238,9 @@ export default function Home() {
           <h1 className="sr-only">
             DragonJulzArt — Wildlife Art by Juliet Musgrave
           </h1>
-          <div className="relative w-full max-w-md sm:max-w-xl mx-auto aspect-[1600/864] mb-6">
+          <div className="relative w-full max-w-md sm:max-w-xl mx-auto aspect-[1600/849] mb-6">
             <Image
-              src="/logo-trimmed.webp"
+              src="/logo-trimmed-dark.webp"
               alt="DragonJulzArt — a dragon's eye watches over hand-lettered logo type, with a paintbrush, pencil and palette"
               fill
               className="object-contain"
@@ -261,7 +261,7 @@ export default function Home() {
           </p>
           <a
             href="#gallery"
-            className="inline-flex items-center gap-2 bg-[var(--clr-secondary)] text-white px-8 py-3.5 rounded-full hover:bg-[var(--clr-primary)] font-medium shadow-md hover:shadow-lg transition-all duration-300"
+            className="inline-flex items-center gap-2 bg-[var(--clr-button)] text-white px-8 py-3.5 rounded-full hover:bg-[var(--clr-button-hover)] font-medium shadow-md hover:shadow-lg transition-all duration-300"
           >
             See the Gallery
             <ArrowRight className="w-4 h-4" />
@@ -534,7 +534,7 @@ export default function Home() {
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                       {isSold && (
-                        <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[var(--clr-secondary)] uppercase text-[11px] font-semibold tracking-wider px-3 py-1 rounded-full shadow-sm">
+                        <span className="absolute top-3 left-3 bg-[var(--clr-bg)]/85 backdrop-blur-sm text-[var(--clr-secondary)] uppercase text-[11px] font-semibold tracking-wider px-3 py-1 rounded-full shadow-sm">
                           Sold
                         </span>
                       )}
@@ -738,7 +738,7 @@ export default function Home() {
                         className="object-cover"
                         sizes="(max-width: 640px) 100vw, 50vw"
                       />
-                      <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm">
+                      <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-[var(--clr-bg)]/85 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm">
                         Highly Commended
                       </span>
                     </div>
@@ -760,7 +760,7 @@ export default function Home() {
                         className="object-cover"
                         sizes="(max-width: 640px) 100vw, 50vw"
                       />
-                      <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm">
+                      <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-[var(--clr-bg)]/85 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm">
                         Highly Commended
                       </span>
                     </div>
@@ -829,17 +829,17 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[var(--clr-primary)] text-white/90 py-16 px-4 sm:px-6 lg:px-8">
+      <footer className="bg-[var(--clr-footer)] border-t border-[var(--clr-border)] text-white/90 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             {/* Logo */}
             <div>
               <div className="relative h-11 w-40 mb-4">
                 <Image
-                  src="/logo-header.webp"
+                  src="/logo-header-dark.webp"
                   alt="DragonJulzArt"
                   fill
-                  className="object-contain object-left brightness-0 invert opacity-90"
+                  className="object-contain object-left"
                   sizes="160px"
                 />
               </div>

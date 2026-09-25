@@ -66,7 +66,7 @@ export default function GalleryGrid({ items: galleries, categoryTitle }: Gallery
                 </div>
               )}
               {item.award && (
-                <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full shadow-sm">
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-[var(--clr-bg)]/85 backdrop-blur-sm text-[var(--clr-secondary)] text-[11px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full shadow-sm">
                   <Award className="w-3 h-3" />
                   Award
                 </span>

@@ -14,7 +14,7 @@ export default function SuccessPage() {
         </p>
         <Link
           href="/"
-          className="bg-[var(--clr-secondary)] text-white px-6 py-3 rounded-full hover:bg-[var(--clr-primary)] transition-colors font-medium inline-flex items-center"
+          className="bg-[var(--clr-button)] text-white px-6 py-3 rounded-full hover:bg-[var(--clr-button-hover)] transition-colors font-medium inline-flex items-center"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Return Home
